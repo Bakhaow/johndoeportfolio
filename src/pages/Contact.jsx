@@ -25,38 +25,53 @@ function Contact() {
         <div className="contact-container">
           <div className="contact-form-section">
             <h3>Formulaire de contact</h3>
-            <form onSubmit={handleSubmit} className="contact-form">
+            <form onSubmit={handleSubmit} className="contact-form" aria-label="Formulaire de contact">
+              <label htmlFor="name" className="visually-hidden">Votre nom</label>
               <input
+                id="name"
                 type="text"
                 placeholder="Votre nom"
                 className="form-input"
+                aria-label="Votre nom"
                 required
               />
+              <label htmlFor="email" className="visually-hidden">Votre adresse email</label>
               <input
+                id="email"
                 type="email"
                 placeholder="Votre adresse email"
                 className="form-input"
+                aria-label="Votre adresse email"
                 required
               />
+              <label htmlFor="phone" className="visually-hidden">Votre numéro de téléphone</label>
               <input
+                id="phone"
                 type="tel"
                 placeholder="Votre numéro de téléphone"
                 className="form-input"
+                aria-label="Votre numéro de téléphone"
                 required
               />
+              <label htmlFor="subject" className="visually-hidden">Sujet</label>
               <input
+                id="subject"
                 type="text"
                 placeholder="Sujet"
                 className="form-input"
+                aria-label="Sujet"
                 required
               />
+              <label htmlFor="message" className="visually-hidden">Votre message</label>
               <textarea
+                id="message"
                 placeholder="Votre message"
                 className="form-textarea"
                 rows="6"
+                aria-label="Votre message"
                 required
               ></textarea>
-              <button type="submit" className="submit-button">
+              <button type="submit" className="submit-button" aria-label="Envoyer le formulaire de contact">
                 Envoyer
               </button>
             </form>
