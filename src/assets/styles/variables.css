@@ -5,3 +5,13 @@
   --font-weight-normal: 400;
   --font-weight-bold: 600;
 }
+
+:root {
+  --color-primary: rgb(24, 25, 26);
+  --color-secondary: #fff;
+  --color-white: #fff;
+  --color-black: #000;
+  --color-gray: #ccc;
+  --color-yellow: #ff0;
+  --color-purple: #800080;
+}
