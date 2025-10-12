@@ -39,7 +39,43 @@ strong {
   text-transform: uppercase;
 }
 
-.navbar ul {
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+  margin-right: 2rem;
+  position: relative;
+}
+
+.hamburger span {
+  width: 100%;
+  height: 3px;
+  background-color: var(--color-white);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(10.5px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-10.5px) rotate(-45deg);
+}
+
+.navbar-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -47,11 +83,11 @@ strong {
   padding-top: 0.3rem;
 }
 
-.navbar ul li {
+.navbar-menu li {
   list-style: none;
 }
 
-.navbar ul li a {
+.navbar-menu li a {
   text-decoration: none;
   color: var(--color-gray);
   padding: 0.5rem;
@@ -61,7 +97,7 @@ strong {
   transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.navbar ul li a::after {
+.navbar-menu li a::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -73,11 +109,11 @@ strong {
   transform: translateX(-50%);
 }
 
-.navbar ul li a:hover {
+.navbar-menu li a:hover {
   color: var(--color-white);
 }
 
-.navbar ul li a:hover::after {
+.navbar-menu li a:hover::after {
   width: 80%;
 }
 
@@ -88,7 +124,7 @@ strong {
   margin-top: 0.3rem;
 }
 
-.navbar ul li a.active {
+.navbar-menu li a.active {
   text-decoration: underline;
   color: var(--color-white);
 }
@@ -1226,11 +1262,44 @@ strong {
   .contact-container {
     flex-direction: column;
     gap: 2rem;
-    padding: 1.5rem;
+    padding: 1rem;
+  }
+
+  .contact-form-section,
+  .contact-info-section {
+    width: 100%;
   }
 
   .contact-header h1 {
     font-size: 2rem;
+  }
+
+  .contact-header p {
+    font-size: 1rem;
+  }
+
+  .contact-form {
+    gap: 1rem;
+  }
+
+  .form-input,
+  .form-textarea {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .contact-details p {
+    font-size: 0.9rem;
+  }
+
+  .map-container iframe {
+    height: 250px;
   }
 }
 
@@ -1321,12 +1390,31 @@ strong {
     padding: 1rem 1.2rem;
   }
 
+  .accordion-header h3 {
+    font-size: 1rem;
+  }
+
   .accordion-body {
-    padding: 1.2rem !important;
+    padding: 1rem !important;
+    margin: 0.5rem;
+  }
+
+  .accordion-content {
+    gap: 0.6rem;
   }
 
   .contact-item {
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+    line-height: 1.6;
+  }
+
+  .contact-item strong {
     font-size: 0.9rem;
+  }
+
+  .contact-item a {
+    word-break: break-word;
   }
 }
 
@@ -1341,9 +1429,10 @@ strong {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 2000;
   animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(4px);
+  padding: 1rem;
 }
 
 @keyframes fadeIn {
@@ -1365,6 +1454,8 @@ strong {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateZ(0);
+  position: relative;
+  z-index: 2001;
 }
 
 @keyframes modalSlideIn {
@@ -1534,10 +1625,33 @@ strong {
   left: 100%;
 }
 
+/* Modal Responsive */
 @media (max-width: 768px) {
+  .github-modal-overlay {
+    padding: 0;
+    align-items: center;
+  }
+
   .github-modal-content {
     width: 95%;
     max-width: none;
+    max-height: 85vh;
+    margin: 1rem;
+    border-radius: 8px;
+  }
+
+  .github-modal-header {
+    padding: 1rem 1rem;
+  }
+
+  .github-modal-header h3 {
+    font-size: 1rem;
+  }
+
+  .github-modal-close {
+    width: 32px;
+    height: 32px;
+    font-size: 2rem;
   }
 
   .github-profile {
@@ -1547,14 +1661,360 @@ strong {
 
   .github-avatar-section {
     flex: none;
-    padding: 2rem;
+    padding: 1.5rem 1rem;
+    background-color: transparent;
   }
 
   .github-avatar-section img {
     max-width: 150px;
   }
 
+  .github-info-section {
+    padding: 0;
+  }
+
   .github-info-item {
     padding: 0.8rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .github-info-item p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .info-icon {
+    font-size: 0.9rem;
+  }
+
+  .github-modal-footer {
+    padding: 1rem;
+  }
+
+  .github-modal-close-button {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .github-modal-content {
+    width: 90%;
+    max-width: 650px;
+  }
+
+  .github-modal-header h3 {
+    font-size: 1.2rem;
+  }
+
+  .github-profile {
+    min-height: 350px;
+  }
+
+  .github-avatar-section {
+    flex: 0 0 40%;
+    padding: 1.5rem;
+  }
+
+  .github-avatar-section img {
+    max-width: 180px;
+  }
+
+  .github-info-item {
+    padding: 0.85rem 1.2rem;
+    font-size: 0.88rem;
+  }
+
+  .github-info-item p {
+    font-size: 0.88rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - MOBILE, TABLET, DESKTOP
+   ============================================ */
+
+/* Mobile First - Base styles above are for mobile */
+
+/* ==== MOBILE (max-width: 768px) ==== */
+@media (max-width: 768px) {
+  /* Navigation Mobile avec Hamburger */
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar {
+    position: relative;
+  }
+
+  .navbar-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    background-color: var(--color-primary);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 5rem 2rem 2rem;
+    margin: 0;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+
+  .navbar-menu.active {
+    right: 0;
+  }
+
+  .navbar-menu li {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .navbar-menu li a {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border-left: 3px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .navbar-menu li a::after {
+    display: none;
+  }
+
+  .navbar-menu li a:hover,
+  .navbar-menu li a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left-color: var(--color-white);
+    text-decoration: none;
+  }
+
+  .navbar p {
+    margin-left: 1rem;
+    font-size: 1rem;
+  }
+
+  /* Hero Section Mobile */
+  .hero {
+    height: 50vh;
+    min-height: 400px;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-content h2 {
+    font-size: 1.3rem;
+  }
+
+  .cta-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* About Section Mobile */
+  .about-section {
+    padding: 2rem 1rem;
+  }
+
+  .main-card {
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+
+  .about-image img {
+    max-width: 100%;
+  }
+
+  .about-content h3,
+  .skills-content h3 {
+    font-size: 1.5rem;
+  }
+
+  /* Skills Mobile */
+  .skill-item {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-name {
+    min-width: 70px;
+    font-size: 0.75rem;
+    flex: 0 0 auto;
+  }
+
+  .skill-bar {
+    flex: 1;
+    min-width: 120px;
+    height: 18px;
+  }
+
+  .skill-percentage {
+    font-size: 0.75rem;
+    min-width: 35px;
+    flex: 0 0 auto;
+  }
+
+  .skills-list {
+    gap: 1.2rem;
+  }
+
+  /* Footer Mobile */
+  .footer {
+    flex-direction: column;
+    padding: 2rem 1rem;
+    gap: 2rem;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+
+  .footer-content {
+    align-items: center;
+    width: 100%;
+  }
+
+  .footer-content h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-content p {
+    font-size: 0.85rem;
+  }
+
+  .footer-content ul {
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-content ul li {
+    margin: 0.5rem 0;
+  }
+
+  .footer-content ul li a {
+    font-size: 0.9rem;
+    display: inline-block;
+  }
+
+  .social-icons {
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .social-icons a {
+    font-size: 0.85rem;
+  }
+}
+
+/* ==== TABLET (769px - 1024px) ==== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Navigation Tablet */
+  .navbar-menu {
+    margin-right: 1rem;
+  }
+
+  .navbar-menu li a {
+    padding: 0.4rem;
+    font-size: 0.85rem;
+  }
+
+  .navbar p {
+    margin-left: 1rem;
+    font-size: 1rem;
+  }
+
+  /* Hero Tablet */
+  .hero {
+    height: 60vh;
+  }
+
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+
+  /* About Section Tablet */
+  .about-section {
+    padding: 3rem 2rem;
+  }
+
+  .main-card {
+    padding: 2rem;
+    gap: 2rem;
+  }
+
+  .about-image img {
+    max-width: 250px;
+  }
+
+  /* Footer Tablet */
+  .footer {
+    padding: 2rem 2rem;
+    gap: 1.5rem;
+    font-size: 0.75rem;
+  }
+
+  .footer-content h3 {
+    font-size: 0.85rem;
+  }
+
+  .footer-content p {
+    font-size: 0.7rem;
+  }
+
+  .footer-content ul li a {
+    font-size: 0.75rem;
+  }
+
+  /* Skills Tablet */
+  .skill-name {
+    min-width: 90px;
+    font-size: 0.85rem;
+  }
+
+  .skill-percentage {
+    font-size: 0.85rem;
+  }
+
+  /* Contact Tablet */
+  .contact-container {
+    gap: 3rem;
+    padding: 1.5rem;
+  }
+
+  .form-input,
+  .form-textarea {
+    font-size: 0.95rem;
+  }
+}
+
+/* ==== LARGE DESKTOP (min-width: 1400px) ==== */
+@media (min-width: 1400px) {
+  .about-section,
+  .services-main,
+  .portfolio-main,
+  .contact-main,
+  .policies-main {
+    padding-left: 15rem;
+    padding-right: 15rem;
+  }
+
+  .hero-content h1 {
+    font-size: 3.5rem;
+  }
+
+  .hero-content h2 {
+    font-size: 3rem;
   }
 }

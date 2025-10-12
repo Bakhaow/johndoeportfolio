@@ -1,23 +1,57 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import "../assets/styles/main.css";
 
 function Navbar({ active }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav
       className="navbar"
       role="navigation"
       aria-label="Navigation principale"
     >
-      <Link to="/" className="navbar-brand" aria-label="Retour à l'accueil">
+      <Link
+        to="/"
+        className="navbar-brand"
+        aria-label="Retour à l'accueil"
+        onClick={closeMenu}
+      >
         <p>John Doe</p>
       </Link>
-      <ul role="menubar">
+
+      {/* Hamburger Button */}
+      <button
+        className={`hamburger ${isMenuOpen ? "active" : ""}`}
+        onClick={toggleMenu}
+        aria-label="Toggle navigation menu"
+        aria-expanded={isMenuOpen}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      {/* Navigation Menu */}
+      <ul
+        className={`navbar-menu ${isMenuOpen ? "active" : ""}`}
+        role="menubar"
+      >
         <li role="none">
           <Link
             to="/"
             className={active === "home" ? "active" : ""}
             role="menuitem"
             aria-current={active === "home" ? "page" : undefined}
+            onClick={closeMenu}
           >
             Home
           </Link>
@@ -28,6 +62,7 @@ function Navbar({ active }) {
             className={active === "about" ? "active" : ""}
             role="menuitem"
             aria-current={active === "about" ? "page" : undefined}
+            onClick={closeMenu}
           >
             Services
           </Link>
@@ -38,6 +73,7 @@ function Navbar({ active }) {
             className={active === "projects" ? "active" : ""}
             role="menuitem"
             aria-current={active === "projects" ? "page" : undefined}
+            onClick={closeMenu}
           >
             Portfolio
           </Link>
@@ -48,6 +84,7 @@ function Navbar({ active }) {
             className={active === "contact" ? "active" : ""}
             role="menuitem"
             aria-current={active === "contact" ? "page" : undefined}
+            onClick={closeMenu}
           >
             Contact
           </Link>
@@ -58,6 +95,7 @@ function Navbar({ active }) {
             className={active === "policies" ? "active" : ""}
             role="menuitem"
             aria-current={active === "policies" ? "page" : undefined}
+            onClick={closeMenu}
           >
             Mentions Légales
           </Link>
