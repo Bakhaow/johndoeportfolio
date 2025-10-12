@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/alt-text */
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import portfolio1 from "../assets/img/portfolio/fresh-food.jpg";
@@ -15,6 +17,7 @@ function Projects() {
       description: "Site de vente de produits frais en ligne",
       technology: "Site réalisé avec PHP et MySQL",
       image: portfolio1,
+      alt: "Capture d'écran du site Fresh Food - Site de vente de produits frais en ligne",
       link: "#",
     },
     {
@@ -23,6 +26,7 @@ function Projects() {
       description: "Site de vente de produits frais en ligne",
       technology: "Site réalisé avec WordPress",
       image: portfolio2,
+      alt: "Capture d'écran du site Restaurant Akira - Site vitrine de restaurant japonais",
       link: "#",
     },
     {
@@ -31,6 +35,7 @@ function Projects() {
       description: "Site de vente de produits frais en ligne",
       technology: "Site réalisé avec LARAVEL",
       image: portfolio3,
+      alt: "Capture d'écran du site Espace bien-être - Site de réservation de soins et massages",
       link: "#",
     },
     {
@@ -39,6 +44,7 @@ function Projects() {
       description: "Amélioration du référencement d'un site e-commerce",
       technology: "Utilisation des outils SEO",
       image: portfolio4,
+      alt: "Graphique montrant l'amélioration du référencement SEO - Optimisation d'un site e-commerce",
       link: "#",
     },
     {
@@ -47,6 +53,7 @@ function Projects() {
       description: "Création d'une API RESTFULL publique",
       technology: "PHP - SYMFONY",
       image: portfolio5,
+      alt: "Code source d'une API REST - Développement avec PHP et Symfony",
       link: "#",
     },
     {
@@ -55,6 +62,7 @@ function Projects() {
       description: "Création du prototype d'un site",
       technology: "Réalisé avec FIGMA",
       image: portfolio6,
+      alt: "Maquette de site web réalisée avec Figma - Design d'interface utilisateur",
       link: "#",
     },
   ];
@@ -80,12 +88,20 @@ function Projects() {
           {portfolioItems.map((item) => (
             <div key={item.id} className="portfolio-card">
               <div className="portfolio-image">
-                <img src={item.image} alt="portfolio image" />
+                <img
+                  src={item.image}
+                  alt={item.alt && item.alt.trim() !== "" ? item.alt : ""}
+                />
               </div>
               <div className="portfolio-content">
                 <h3>{item.title}</h3>
                 <p className="portfolio-description">{item.description}</p>
-                <button className="portfolio-button">Voir le site</button>
+                <button
+                  className="portfolio-button"
+                  aria-label={`Voir le site ${item.title}`}
+                >
+                  Voir le site
+                </button>
               </div>
               <div className="portfolio-technology-section">
                 <p className="portfolio-technology">{item.technology}</p>
