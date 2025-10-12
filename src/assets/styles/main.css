@@ -1,6 +1,26 @@
+/* Optimisation des performances CSS */
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: var(--font-primary);
   font-weight: var(--font-weight-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessibilité : Labels visuellement cachés mais disponibles pour les lecteurs d'écran */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 h1,
@@ -37,11 +57,28 @@ strong {
   padding: 0.5rem;
   font-size: 0.9rem;
   font-weight: var(--font-weight-bold);
-  transition: color 0.3s ease;
+  position: relative;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar ul li a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-white);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-50%);
 }
 
 .navbar ul li a:hover {
   color: var(--color-white);
+}
+
+.navbar ul li a:hover::after {
+  width: 80%;
 }
 
 .navbar p {
@@ -82,7 +119,7 @@ strong {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(256, 256, 256, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .hero-content {
@@ -113,11 +150,41 @@ strong {
   font-size: 1rem;
   font-weight: var(--font-weight-bold);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.cta-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
 }
 
 .cta-button:hover {
   background-color: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+.cta-button:hover::before {
+  left: 100%;
+}
+
+.cta-button:active {
+  transform: translateY(0);
 }
 
 /* About Section */
@@ -131,14 +198,16 @@ strong {
   padding: 3rem;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   gap: 4rem;
   align-items: flex-start;
+  transform: translateZ(0);
 }
 
 .main-card:hover {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  transform: translateY(-4px);
 }
 
 .about-content {
@@ -174,6 +243,14 @@ strong {
   max-width: 300px;
   height: auto;
   border-radius: 8px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+}
+
+.about-image img:hover {
+  transform: scale(1.05) translateZ(0);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .about-text p {
@@ -237,7 +314,35 @@ strong {
 .skill-progress {
   height: 100%;
   border-radius: 10px;
-  transition: width 0.3s ease;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-progress::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .skill-progress.html {
@@ -311,11 +416,14 @@ strong {
 .footer-content ul li a {
   text-decoration: none;
   color: var(--color-white);
-  transition: color 0.3s ease;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
 }
 
 .footer-content ul li a:hover {
   color: var(--color-gray);
+  transform: translateX(5px);
 }
 
 .social-icons {
@@ -330,12 +438,14 @@ strong {
   color: var(--color-white);
   text-decoration: none;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
 }
 
 .social-icons a:hover {
   opacity: 1;
   text-decoration: underline;
+  transform: translateY(-2px) scale(1.1);
 }
 
 /* Contact Page Styles */
@@ -438,7 +548,7 @@ strong {
   border-radius: 8px;
   font-size: 1rem;
   font-family: var(--font-primary);
-  transition: border-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: var(--color-white);
 }
 
@@ -446,6 +556,8 @@ strong {
 .form-textarea:focus {
   outline: none;
   border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 .form-input::placeholder,
@@ -467,13 +579,40 @@ strong {
   font-weight: var(--font-weight-bold);
   cursor: pointer;
   border-radius: 8px;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   align-self: flex-end;
   margin: auto;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.submit-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
 }
 
 .submit-button:hover {
   background-color: #0056b3;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 123, 255, 0.3);
+}
+
+.submit-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.submit-button:active {
+  transform: translateY(-1px);
 }
 
 .contact-details {
@@ -615,12 +754,14 @@ strong {
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .portfolio-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
 }
 
 .portfolio-image {
@@ -633,11 +774,12 @@ strong {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
 }
 
 .portfolio-card:hover .portfolio-image img {
-  transform: scale(1.05);
+  transform: scale(1.1) rotate(1deg);
 }
 
 .portfolio-content {
@@ -670,14 +812,37 @@ strong {
   font-weight: var(--font-weight-bold);
   cursor: pointer;
   border-radius: 6px;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-bottom: 0;
   display: block;
   width: 100%;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.portfolio-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background-color: #0056b3;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  z-index: -1;
 }
 
 .portfolio-button:hover {
-  background-color: #0056b3;
+  color: var(--color-white);
+  transform: scale(1.03);
+}
+
+.portfolio-button:hover::before {
+  width: 400px;
+  height: 400px;
 }
 
 .portfolio-technology-section {
@@ -812,12 +977,35 @@ strong {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 123, 255, 0.05),
+    transparent
+  );
+  transition: left 0.6s ease;
 }
 
 .service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.service-card:hover::before {
+  left: 100%;
 }
 
 .service-icon {
@@ -828,6 +1016,12 @@ strong {
   font-size: 3rem;
   color: #007bff;
   display: block;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+}
+
+.service-card:hover .service-icon span {
+  transform: scale(1.2) rotateY(360deg);
 }
 
 .service-card h3 {
@@ -891,6 +1085,13 @@ strong {
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   background-color: var(--color-white);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+}
+
+.accordion-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .accordion-header {
@@ -900,12 +1101,34 @@ strong {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.accordion-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(59, 130, 246, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
 }
 
 .accordion-header:hover {
   background-color: #e5e7eb;
+}
+
+.accordion-header:hover::before {
+  left: 100%;
 }
 
 .accordion-header.active {
@@ -925,14 +1148,31 @@ strong {
 .accordion-icon {
   font-size: 0.9rem;
   color: #6b7280;
-  transition: transform 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: bold;
+}
+
+.accordion-header.active .accordion-icon {
+  transform: rotate(180deg);
+  color: #007bff;
 }
 
 .accordion-body {
   background-color: var(--color-white);
   padding: 1.5rem;
   margin: 1rem;
+  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .accordion-content {
@@ -1102,6 +1342,17 @@ strong {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(4px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .github-modal-content {
@@ -1112,17 +1363,18 @@ strong {
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  animation: modalSlideIn 0.3s ease-out;
+  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
 }
 
 @keyframes modalSlideIn {
   from {
     opacity: 0;
-    transform: translateY(-50px);
+    transform: scale(0.9) translateY(-30px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1) translateY(0);
   }
 }
 
@@ -1154,12 +1406,15 @@ strong {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   line-height: 1;
+  border-radius: 50%;
 }
 
 .github-modal-close:hover {
   opacity: 0.7;
+  transform: rotate(90deg) scale(1.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .github-modal-body {
@@ -1253,11 +1508,30 @@ strong {
   font-weight: var(--font-weight-bold);
   cursor: pointer;
   border-radius: 8px;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.github-modal-close-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: left 0.4s ease;
 }
 
 .github-modal-close-button:hover {
   background-color: #2d3748;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.github-modal-close-button:hover::before {
+  left: 100%;
 }
 
 @media (max-width: 768px) {

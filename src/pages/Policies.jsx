@@ -1,9 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 function Policies() {
   const [activeAccordion, setActiveAccordion] = useState(null);
+
+  useEffect(() => {
+    // Ajouter la balise meta noindex pour cette page
+    const metaRobots = document.createElement("meta");
+    metaRobots.name = "robots";
+    metaRobots.content = "noindex, nofollow";
+    metaRobots.id = "meta-robots-policies";
+    document.head.appendChild(metaRobots);
+
+    // Modifier le titre de la page
+    document.title = "Mentions légales - John Doe";
+
+    // Nettoyage : supprimer la balise meta lors du démontage du composant
+    return () => {
+      const metaTag = document.getElementById("meta-robots-policies");
+      if (metaTag) {
+        document.head.removeChild(metaTag);
+      }
+      // Restaurer le titre par défaut
+      document.title = "John Doe - Développeur Web Freelance | Lyon, France";
+    };
+  }, []);
 
   const toggleAccordion = (index) => {
     setActiveAccordion(activeAccordion === index ? null : index);

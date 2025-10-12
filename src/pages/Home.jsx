@@ -12,7 +12,9 @@ function Home() {
         <div className="hero-content">
           <h1>Bonjour, je suis John Doe</h1>
           <h2>Développeur web full stack</h2>
-          <button className="cta-button">En savoir plus</button>
+          <button className="cta-button" aria-label="En savoir plus sur John Doe">
+            En savoir plus
+          </button>
         </div>
       </section>
 
@@ -22,7 +24,7 @@ function Home() {
           <div className="about-content">
             <h3>A propos</h3>
             <div className="about-image">
-              <img src={johnDoeAbout} alt="John Doe" />
+              <img src={johnDoeAbout} alt="Portrait professionnel de John Doe, développeur web full stack" />
             </div>
             <div className="about-text">
               <p>
